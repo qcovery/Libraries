@@ -1,0 +1,12 @@
+{
+    "name": "qcovery/libraries",
+    "description": "Add facets for the searchspace in VuFind",
+    "type": "qcovery-module",
+    "require": {
+        "php": ">=7.3",
+        "qcovery/vufind-composer-installer-plugin": "*"
+    },
+    "extra": {
+        "moduleName": "Libraries"
+    }
+}

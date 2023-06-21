@@ -32,9 +32,34 @@ use VuFindSearch\ParamBag;
 
 use Laminas\Http\Request;
 use Laminas\Http\Client as HttpClient;
+use Laminas\Http\Client\Adapter\AdapterInterface;
 
 class Connector extends \VuFindSearch\Backend\Solr\Connector
 {
+
+    /**
+     * HTTP read timeout.
+     *
+     * @var int
+     */
+    protected int $timeout = 30;
+
+    /**
+     * Proxy service
+     *
+     * @var mixed
+     */
+    protected $proxy;
+
+    /**
+     * HTTP client adapter.
+     *
+     * Either the class name or a adapter instance.
+     *
+     * @var string|AdapterInterface
+     */
+    protected $adapter = 'Laminas\Http\Client\Adapter\Socket';
+
     /**
      * Library Filter Type: either 'url' if url-Filters are supported
      *                          or 'fq' otherwise
@@ -51,8 +76,9 @@ class Connector extends \VuFindSearch\Backend\Solr\Connector
      *
      * @return string Response body
      */
-    public function query($handler, ParamBag $params)
+    public function query($handler, ParamBag $params, bool $cacheable = false)
     {
+        // TODO $cacheable should be implemented
         $url = $this->addLibraryFilter($handler, $params);
         $paramString = implode('&', $params->request());
         if (strlen($paramString) > self::MAX_GET_URL_LENGTH) {
@@ -105,6 +131,59 @@ class Connector extends \VuFindSearch\Backend\Solr\Connector
         } else {
             return (empty($libraryFilter)) ? $this->url . '/' . $handler : $this->url . '/' . $handler . '?fq=' . $libraryFilter;
         }
+    }
+
+    /**
+     * @return int
+     */
+    public function getTimeout(): int
+    {
+        return $this->timeout;
+    }
+
+    /**
+     * @param int $timeout
+     */
+    public function setTimeout(int $timeout): void
+    {
+        $this->timeout = $timeout;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProxy()
+    {
+        return $this->proxy;
+    }
+
+    /**
+     * @param mixed $proxy
+     */
+    public function setProxy($proxy): void
+    {
+        $this->proxy = $proxy;
+    }
+
+    /**
+     * Create the HTTP client.
+     *
+     * @param string $url    Target URL
+     * @param string $method Request method
+     *
+     * @return \Laminas\Http\Client
+     */
+    protected function createClient($url, $method): HttpClient
+    {
+        $client = new HttpClient();
+        $client->setAdapter($this->adapter);
+        $client->setOptions(['timeout' => $this->timeout]);
+        $client->setUri($url);
+        $client->setMethod($method);
+        if ($this->proxy) {
+            $this->proxy->proxify($client);
+        }
+        return $client;
     }
 }
 

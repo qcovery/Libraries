@@ -30,8 +30,8 @@ namespace Libraries\Backend\Solr;
 use VuFindSearch\Backend\Solr\HandlerMap;
 use VuFindSearch\ParamBag;
 
-use Zend\Http\Request;
-use Zend\Http\Client as HttpClient;
+use Laminas\Http\Request;
+use Laminas\Http\Client as HttpClient;
 
 class Connector extends \VuFindSearch\Backend\Solr\Connector
 {

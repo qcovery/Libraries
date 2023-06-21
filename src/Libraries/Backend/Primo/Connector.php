@@ -27,8 +27,8 @@
  */
 namespace Libraries\Backend\Primo;
 
-use Zend\Log\LoggerInterface;
-use Zend\Http\Client as HttpClient;
+use Laminas\Log\LoggerInterface;
+use Laminas\Http\Client as HttpClient;
 
 class Connector extends \VuFindSearch\Backend\Primo\Connector
 {

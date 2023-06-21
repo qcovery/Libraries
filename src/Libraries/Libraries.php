@@ -28,8 +28,8 @@
 namespace Libraries;
 
 use VuFind\Search\Memory;
-use Zend\Session\Container as SessionContainer;
-use Zend\Config\Config;
+use Laminas\Session\Container as SessionContainer;
+use Laminas\Config\Config;
 
 class Libraries
 {

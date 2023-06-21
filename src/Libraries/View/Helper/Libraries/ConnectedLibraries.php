@@ -6,7 +6,7 @@ namespace Libraries\View\Helper\Libraries;
 
 use Libraries\Libraries;
 
-class ConnectedLibraries extends \Zend\View\Helper\AbstractHelper
+class ConnectedLibraries extends \Laminas\View\Helper\AbstractHelper
 {
     protected $Libraries;
 

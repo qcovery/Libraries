@@ -176,5 +176,10 @@ class Params extends BaseParams
         parent::initFromRequest($request);
         $this->initLibraries();
     }
+    
+    // eWW Bugfix
+    public function getFilters () {
+	    return $this->getFilterSettings();
+    }
 }
 

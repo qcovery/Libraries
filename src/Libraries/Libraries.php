@@ -114,7 +114,7 @@ class Libraries
                     }
                 }
             } elseif ($data['action'] == 'externalLink') {
-                $this->$externalLinkData[$libraryCode] = $data;
+                $this->externalLinkData[$libraryCode] = $data;
             }
         }
         uasort($this->includedLibraries, function($a, $b) {return strcmp($a['sort'], $b['sort']);});

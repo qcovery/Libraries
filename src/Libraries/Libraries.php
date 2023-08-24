@@ -290,7 +290,7 @@ class Libraries
      *
      * @return array
      */
-    public function getLibraryFilters($libraryCode = '', $searchClassId, $included = true, $getDefaultInsteadOfAll = false) {
+    public function getLibraryFilters($libraryCode, $searchClassId, $included = true, $getDefaultInsteadOfAll = false) {
         $libraryFilters = [];
         $searchClassId = strtolower($searchClassId);
         $libraries = ($included) ? $this->includedLibraries : $this->excludedLibraries;

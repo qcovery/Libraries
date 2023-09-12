@@ -19,6 +19,30 @@ $config = [
             'VuFind\Search\BackendManager' => 'Libraries\Search\BackendManager',
         ],
     ],
+    'vufind' => [
+        'plugin_managers' => [
+            'ajaxhandler' => [
+                'factories' => [
+                    'Libraries\AjaxHandler\GetLibraries' => 'Libraries\AjaxHandler\GetLibrariesFactory',
+                ],
+                'aliases' => [
+                    'getLibraries' => 'Libraries\AjaxHandler\GetLibraries',
+                ],
+            ],
+            'search_params' => [
+                'factories' => [
+                    'Libraries\Search\Search2\Params' => 'Libraries\Search\Solr\ParamsFactory',
+                    'Libraries\Search\Solr\Params' => 'Libraries\Search\Solr\ParamsFactory',
+                ],
+                'aliases' => [
+                    'search2' => 'Libraries\Search\Search2\Params',
+                    'solr' => 'Libraries\Search\Solr\Params',
+                    'VuFind\Search\Search2\Params' => 'Libraries\Search\Search2\Params',
+                    'VuFind\Search\Solr\Params' => 'Libraries\Search\Solr\Params',
+                ],
+            ],
+        ],
+    ],
 ];
 
 return $config;

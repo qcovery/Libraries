@@ -80,18 +80,23 @@ class Connector extends \VuFindSearch\Backend\Solr\Connector
     {
         // TODO $cacheable should be implemented
         $url = $this->addLibraryFilter($handler, $params);
+        $params->remove('mm');
+        //$params->remove('facet.field');
         $paramString = implode('&', $params->request());
+
         if (strlen($paramString) > self::MAX_GET_URL_LENGTH) {
             $method = Request::METHOD_POST;
         } else {
             $method = Request::METHOD_GET;
         }
 
+        $method = Request::METHOD_GET;
+
         if ($method === Request::METHOD_POST) {
             $client = $this->createClient($url, $method);
             $client->setRawBody($paramString);
             $client->setEncType(HttpClient::ENC_URLENCODED);
-            $client->setHeaders(array('Content-Length' => strlen($paramString)));
+            $client->setHeaders(array('Content-Length' => strlen($paramString), 'Content-Type' => 'text/plain'));
         } else {
             $url = (strpos($url, '?') === false) ? $url . '?' . $paramString : $url . '&' . $paramString;
             $client = $this->createClient($url, $method);

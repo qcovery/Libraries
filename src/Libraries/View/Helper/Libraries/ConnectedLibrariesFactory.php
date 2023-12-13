@@ -1,6 +1,6 @@
 <?php
 /**
- * SearchBox helper factory.
+ * ConnectedLibraries helper factory.
  *
  * PHP version 7
  *

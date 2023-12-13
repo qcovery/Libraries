@@ -122,7 +122,7 @@ class Libraries
     }
 
     /**
-     * Check if a identifying code is valid 
+     * Check if the identifying code is valid
      *
      * @param string        $libraryCode           code
      *

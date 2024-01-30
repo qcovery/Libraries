@@ -90,13 +90,11 @@ class Connector extends \VuFindSearch\Backend\Solr\Connector
             $method = Request::METHOD_GET;
         }
 
-        $method = Request::METHOD_GET;
-
         if ($method === Request::METHOD_POST) {
             $client = $this->createClient($url, $method);
             $client->setRawBody($paramString);
             $client->setEncType(HttpClient::ENC_URLENCODED);
-            $client->setHeaders(array('Content-Length' => strlen($paramString), 'Content-Type' => 'text/plain'));
+            $client->setHeaders(array('Content-Length' => strlen($paramString)));
         } else {
             $url = (strpos($url, '?') === false) ? $url . '?' . $paramString : $url . '&' . $paramString;
             $client = $this->createClient($url, $method);

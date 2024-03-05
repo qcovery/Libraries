@@ -28,8 +28,8 @@
 namespace Libraries;
 
 use VuFind\Search\Memory;
-use Zend\Session\Container as SessionContainer;
-use Zend\Config\Config;
+use Laminas\Session\Container as SessionContainer;
+use Laminas\Config\Config;
 
 class Libraries
 {
@@ -114,7 +114,7 @@ class Libraries
                     }
                 }
             } elseif ($data['action'] == 'externalLink') {
-                $this->$externalLinkData[$libraryCode] = $data;
+                $this->externalLinkData[$libraryCode] = $data;
             }
         }
         uasort($this->includedLibraries, function($a, $b) {return strcmp($a['sort'], $b['sort']);});
@@ -122,7 +122,7 @@ class Libraries
     }
 
     /**
-     * Check if a identifying code is valid 
+     * Check if the identifying code is valid
      *
      * @param string        $libraryCode           code
      *
@@ -290,7 +290,7 @@ class Libraries
      *
      * @return array
      */
-    public function getLibraryFilters($libraryCode = '', $searchClassId, $included = true, $getDefaultInsteadOfAll = false) {
+    public function getLibraryFilters($libraryCode, $searchClassId, $included = true, $getDefaultInsteadOfAll = false) {
         $libraryFilters = [];
         $searchClassId = strtolower($searchClassId);
         $libraries = ($included) ? $this->includedLibraries : $this->excludedLibraries;

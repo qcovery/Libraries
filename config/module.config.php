@@ -5,16 +5,42 @@ $config = [
     'service_manager' => [
         'allow_override' => true,
         'factories' => [
-            'Libraries\AjaxHandler\PluginManager' => 'VuFind\ServiceManager\AbstractPluginManagerFactory',
+            'Libraries\AjaxHandler\GetLibraries' => 'Libraries\AjaxHandler\GetLibrariesFactory',
             'Libraries\Search\BackendManager' => 'Libraries\Search\BackendManagerFactory',
-            'Libraries\Search\Params\PluginManager' => 'VuFind\ServiceManager\AbstractPluginManagerFactory',
-            'Libraries\Search\Results\PluginManager' => 'VuFind\ServiceManager\AbstractPluginManagerFactory',
+            'Libraries\Search\Search2\Params' => 'Libraries\Search\Solr\ParamsFactory',
+            'Libraries\Search\Solr\Params' => 'Libraries\Search\Solr\ParamsFactory',
+            'VuFind\Search\Search2\Results' => 'Libraries\Search\Search2\ResultsFactory',
+            'VuFind\Search\Solr\Results' => 'Libraries\Search\Solr\ResultsFactory',
         ],
         'aliases' => [
-            'VuFind\AjaxHandler\PluginManager' => 'Libraries\AjaxHandler\PluginManager',
+            'getLibraries' => 'Libraries\AjaxHandler\GetLibraries',
+            'search2' => 'Libraries\Search\Search2\Params',
+            'solr' => 'Libraries\Search\Solr\Params',
             'VuFind\Search\BackendManager' => 'Libraries\Search\BackendManager',
-            'VuFind\Search\Params\PluginManager' => 'Libraries\Search\Params\PluginManager',
-            'VuFind\Search\Results\PluginManager' => 'Libraries\Search\Results\PluginManager',
+        ],
+    ],
+    'vufind' => [
+        'plugin_managers' => [
+            'ajaxhandler' => [
+                'factories' => [
+                    'Libraries\AjaxHandler\GetLibraries' => 'Libraries\AjaxHandler\GetLibrariesFactory',
+                ],
+                'aliases' => [
+                    'getLibraries' => 'Libraries\AjaxHandler\GetLibraries',
+                ],
+            ],
+            'search_params' => [
+                'factories' => [
+                    'Libraries\Search\Search2\Params' => 'Libraries\Search\Solr\ParamsFactory',
+                    'Libraries\Search\Solr\Params' => 'Libraries\Search\Solr\ParamsFactory',
+                ],
+                'aliases' => [
+                    'search2' => 'Libraries\Search\Search2\Params',
+                    'solr' => 'Libraries\Search\Solr\Params',
+                    'VuFind\Search\Search2\Params' => 'Libraries\Search\Search2\Params',
+                    'VuFind\Search\Solr\Params' => 'Libraries\Search\Solr\Params',
+                ],
+            ],
         ],
     ],
 ];

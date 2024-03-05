@@ -28,14 +28,14 @@
 namespace Libraries\AjaxHandler;
 
 use Libraries\Selector;
-use Libraries\Search\Results\PluginManager as ResultsManager;
+use VuFind\Search\Results\PluginManager as ResultsManager;
 use VuFind\Search\Memory;
 use Libraries\Libraries;
 use VuFind\AjaxHandler\AbstractBase;
-use Zend\Mvc\Controller\Plugin\Params;
-use Zend\Mvc\I18n\Translator;
-use Zend\Stdlib\Parameters;
-use Zend\Config\Config;
+use Laminas\Mvc\Controller\Plugin\Params;
+use Laminas\Mvc\I18n\Translator;
+use Laminas\Stdlib\Parameters;
+use Laminas\Config\Config;
 
 /**
  * This controller handles global AJAX functionality

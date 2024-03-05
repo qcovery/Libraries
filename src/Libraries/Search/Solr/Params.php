@@ -166,7 +166,7 @@ class Params extends BaseParams
     /**
      * Pull the search parameters
      *
-     * @param \Zend\StdLib\Parameters $request Parameter object representing user
+     * @param \Laminas\StdLib\Parameters $request Parameter object representing user
      * request.
      *
      * @return void
@@ -175,6 +175,11 @@ class Params extends BaseParams
     {
         parent::initFromRequest($request);
         $this->initLibraries();
+    }
+    
+    // eWW Bugfix
+    public function getFilters () {
+	    return $this->getFilterSettings();
     }
 }
 

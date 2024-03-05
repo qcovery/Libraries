@@ -1,6 +1,6 @@
 <?php
 /**
- * Factory for GetRecordDetails AJAX handler.
+ * Factory for GetLibraries AJAX handler.
  *
  * PHP version 7
  *
@@ -41,7 +41,7 @@ use Interop\Container\ContainerInterface;
  * @link     https://vufind.org/wiki/development Wiki
  */
 class GetLibrariesFactory
-    implements \Zend\ServiceManager\Factory\FactoryInterface
+    implements \Laminas\ServiceManager\Factory\FactoryInterface
 {
     /**
      * Create an object
@@ -67,7 +67,7 @@ class GetLibrariesFactory
         }
         return new $requestedName(
             $container->get('VuFind\Config\PluginManager')->get('libraries'),
-            $container->get('Libraries\Search\Results\PluginManager'),
+            $container->get('VuFind\Search\Results\PluginManager'),
             $container->get('VuFind\Search\Memory'),
             $container->get('VuFind\Translator')
         );

@@ -170,5 +170,10 @@ class Params extends \SearchKeys\Search\Search2\Params
         parent::initFromRequest($request);
         $this->initLibraries();
     }
+
+    // eWW Bugfix
+    public function getFilters () {
+        return $this->getFilterSettings();
+    }
 }
 

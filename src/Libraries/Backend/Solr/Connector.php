@@ -81,7 +81,19 @@ class Connector extends \VuFindSearch\Backend\Solr\Connector
         // TODO $cacheable should be implemented
         $url = $this->addLibraryFilter($handler, $params);
         $params->remove('mm');
-        //$params->remove('facet.field');
+        $facetFieldParam = $params->get('facet.field');
+        if (!$facetFieldParam) {
+            $params->remove('facet.field');
+        } else if (is_array($facetFieldParam)) {
+            foreach ($facetFieldParam as $index => $facetFieldEntry) {
+                if ($facetFieldEntry == '') {
+                    unset($facetFieldParam[$index]);
+                }
+            }
+            if (empty($facetFieldParam)) {
+                $params->remove('facet.field');
+            }
+        }        
         $paramString = implode('&', $params->request());
 
         if (strlen($paramString) > self::MAX_GET_URL_LENGTH) {

@@ -442,6 +442,6 @@ class Libraries
     }
 
     public function getLibraryLinkData ($libraryCode) {
-        return $this->$externalLinkData[$libraryCode];
+        return $this->externalLinkData[$libraryCode];
     }
 }

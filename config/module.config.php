@@ -41,6 +41,14 @@ $config = [
                     'VuFind\Search\Solr\Params' => 'Libraries\Search\Solr\Params',
                 ],
             ],
+            'search_results' => [
+                'factories' => [
+                    'Libraries\Search\Solr\Results' => 'Libraries\Search\Results\ResultsFactory',
+                ],
+                'aliases' => [
+                    'solr' => 'Libraries\Search\Solr\Results',
+                ],
+            ],
         ],
     ],
 ];

@@ -29,7 +29,7 @@ namespace Libraries;
 
 use VuFind\Search\Memory;
 use Laminas\Session\Container as SessionContainer;
-use Laminas\Config\Config;
+use VuFind\Config\Config;
 
 class Libraries
 {

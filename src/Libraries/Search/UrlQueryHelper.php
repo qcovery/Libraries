@@ -564,6 +564,22 @@ class UrlQueryHelper
     }
 
     /**
+     * Return HTTP parameters to render the current page with a different jumpto
+     * parameter.
+     *
+     * @param null|false|int $jumpto If results page is skipped when a search has only one hit
+     *
+     * @return UrlQueryHelper
+     */
+    public function setJumpto(null|false|int $jumpto): UrlQueryHelper
+    {
+        return $this->updateQueryString(
+            'jumpto',
+            $jumpto
+        );
+    }
+
+    /**
      * Return HTTP parameters to render the current page with a different set
      * of search terms.
      *
@@ -659,7 +675,7 @@ class UrlQueryHelper
      *                          for no default).
      * @param bool   $clearPage Should we clear the page number, if any?
      *
-     * @return string
+     * @return UrlQueryHelper
      */
     protected function updateQueryString(
         $field,

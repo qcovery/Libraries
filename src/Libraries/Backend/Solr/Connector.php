@@ -36,6 +36,7 @@ use Laminas\Http\Client\Adapter\AdapterInterface;
 
 class Connector extends \VuFindSearch\Backend\Solr\Connector
 {
+    use \VuFindSearch\Backend\Feature\ConnectorCacheTrait;
 
     /**
      * HTTP read timeout.
@@ -73,12 +74,12 @@ class Connector extends \VuFindSearch\Backend\Solr\Connector
      *
      * @param string   $handler SOLR request handler to use
      * @param ParamBag $params  Request parameters
+     * @param bool     $cacheable Whether the query is cacheable
      *
      * @return string Response body
      */
     public function query($handler, ParamBag $params, bool $cacheable = false)
     {
-        // TODO $cacheable should be implemented
         $url = $this->addLibraryFilter($handler, $params);
         $params->remove('mm');
         $facetFieldParam = $params->get('facet.field');
@@ -98,24 +99,45 @@ class Connector extends \VuFindSearch\Backend\Solr\Connector
 
         if (strlen($paramString) > self::MAX_GET_URL_LENGTH) {
             $method = Request::METHOD_POST;
+            $callback = function ($client) use ($paramString) {
+                $client->setRawBody($paramString);
+                $client->setEncType(HttpClient::ENC_URLENCODED);
+                $client->setHeaders(['Content-Length' => strlen($paramString)]);
+            };
         } else {
             $method = Request::METHOD_GET;
+            $urlSuffix = (strpos($url, '?') === false) ? '?' . $paramString : '&' . $paramString;
+            $url .= $urlSuffix;
+            $callback = null;
         }
 
-        if ($method === Request::METHOD_POST) {
-            $client = $this->createClient($url, $method);
-            $client->setRawBody($paramString);
-            $client->setEncType(HttpClient::ENC_URLENCODED);
-            $client->setHeaders(array('Content-Length' => strlen($paramString)));
-        } else {
-            $url = (strpos($url, '?') === false) ? $url . '?' . $paramString : $url . '&' . $paramString;
-            $client = $this->createClient($url, $method);
-        }
         if ($this->logger) {
             $this->logger->debug('Query' . urldecode($paramString));
         }
 
-        return $this->send($client);
+        $cacheKey = null;
+        if ($cacheable && $this->cache) {
+            $client = $this->createClient($url, $method);
+            if ($callback) {
+                $callback($client);
+            }
+            $cacheKey = $this->getCacheKey($client);
+            if ($result = $this->getCachedData($cacheKey)) {
+                return $result;
+            }
+        }
+
+        $client = $this->createClient($url, $method);
+        if ($callback) {
+            $callback($client);
+        }
+        $result = $this->send($client);
+
+        if ($cacheKey) {
+            $this->putCachedData($cacheKey, $result);
+        }
+
+        return $result;
     }
 
     /**
@@ -201,5 +223,3 @@ class Connector extends \VuFindSearch\Backend\Solr\Connector
         return $client;
     }
 }
-
-

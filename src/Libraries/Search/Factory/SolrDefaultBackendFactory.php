@@ -70,7 +70,9 @@ class SolrDefaultBackendFactory extends BackendFactory
         if ($this->serviceLocator->has('VuFind\Http')) {
             $connector->setProxy($this->serviceLocator->get('VuFind\Http'));
         }
+        if ($cache = $this->createConnectorCache($this->config->get('searches'))) {
+            $connector->setCache($cache);
+        }
         return $connector;
     }
 }
-

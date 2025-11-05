@@ -97,8 +97,7 @@ class Libraries
         $this->excludedLibraries = array();
         $this->defaultLibraries = array();
 
-        foreach ($config as $dataObject) {
-            $data = $dataObject->toArray();
+        foreach ($config as $data) {
             $libraryCode = $data['code'];
             if ($data['action'] == 'include') {
                 $this->includedLibraries[$libraryCode] = $data;

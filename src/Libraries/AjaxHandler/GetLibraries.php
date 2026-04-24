@@ -35,7 +35,7 @@ use VuFind\AjaxHandler\AbstractBase;
 use Laminas\Mvc\Controller\Plugin\Params;
 use Laminas\Mvc\I18n\Translator;
 use Laminas\Stdlib\Parameters;
-use Laminas\Config\Config;
+use VuFind\Config\Config;
 
 /**
  * This controller handles global AJAX functionality

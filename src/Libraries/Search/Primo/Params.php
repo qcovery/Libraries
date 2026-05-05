@@ -48,7 +48,7 @@ class Params extends \SearchKeys\Search\Primo\Params
         \VuFind\Search\Memory $searchMemory
     ) {
         parent::__construct($options, $configLoader);
-        $this->Libraries = new Libraries($configLoader, $searchMemory);
+        $this->Libraries = new Libraries($configLoader->get('libraries'), $searchMemory);
     }
 
     /**

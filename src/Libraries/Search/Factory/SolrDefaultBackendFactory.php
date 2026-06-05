@@ -40,7 +40,7 @@ class SolrDefaultBackendFactory extends BackendFactory
      */
     protected function createConnector()
     {
-        $config = $this->config->get($this->mainConfig);
+        $config = $this->configManager->get($this->mainConfig);
 
         $handlers = [
             'select' => [

@@ -172,6 +172,15 @@ class GetLibraries extends AbstractBase
             $locationFacets[$locationItem['value']] = $locationItem['count'];
         }
         $locationFacets = $this->Libraries->getLocationList($locationFacets);
+        $locationFacets = array_combine(
+            array_map(
+                function ($locationKey) {
+                    return $this->translator->translate($locationKey);
+                },
+                array_keys($locationFacets)
+            ),
+            $locationFacets
+        );
 
         $data = [
             'libraryCount' => count($libraryData),
